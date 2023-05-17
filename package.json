@@ -22,6 +22,8 @@
 		"*.{css,md,json,html}": "prettier --write"
 	},
 	"dependencies": {
+		"@next-auth/prisma-adapter": "^1.0.6",
+		"@prisma/client": "^4.14.0",
 		"@types/node": "20.1.5",
 		"@types/react": "18.2.6",
 		"@types/react-dom": "18.2.4",
@@ -29,6 +31,7 @@
 		"eslint": "8.40.0",
 		"eslint-config-next": "13.4.2",
 		"next": "13.4.2",
+		"next-auth": "^4.22.1",
 		"postcss": "8.4.23",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
@@ -39,8 +42,10 @@
 		"@commitlint/config-conventional": "^17.6.3",
 		"@typescript-eslint/eslint-plugin": "^5.59.6",
 		"@typescript-eslint/parser": "^5.59.6",
+		"dotenv-cli": "^7.2.1",
 		"husky": "^8.0.0",
 		"lint-staged": "^13.2.2",
-		"prettier": "^2.8.8"
+		"prettier": "^2.8.8",
+		"prisma": "^4.14.0"
 	}
 }
