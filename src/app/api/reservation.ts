@@ -1,4 +1,5 @@
-import { Reservation } from "@prisma/client";
+import { Reservation, User } from "@prisma/client";
+import { ApiCacheKeys, GetMethod } from "types/api/getMethod";
 
 export const createReservation = async (values: {
 	dateFrom: Date;
@@ -17,10 +18,13 @@ export const createReservation = async (values: {
 	return reservation;
 };
 
-export const getReservation = async (day: Date): Promise<Reservation[]> => {
+export const getReservation: GetMethod<
+	Array<Reservation & { user: User }>
+> = async (day: Date) => {
 	const res = await fetch(`/api/reservation/${day.toISOString()}`, {
 		method: "get",
 	});
 	const reservations = await res.json();
 	return reservations;
 };
+getReservation.uniqueKey = ApiCacheKeys.GET_RESERVATION_OF_DAY;
