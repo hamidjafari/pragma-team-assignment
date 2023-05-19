@@ -3,7 +3,7 @@ import { VariantProps, cva } from "cva";
 import clsx from "clsx";
 
 const buttonStyles = cva(
-	"flex items-center justify-center px-8 py-4 rounded-2xl focus:outline-none cursor-pointer",
+	"flex items-center justify-center px-8 py-2 focus:outline-none cursor-pointer",
 	{
 		variants: {
 			intent: {
@@ -20,9 +20,14 @@ const buttonStyles = cva(
 			loading: {
 				true: "cursor-not-allowed text-opacity-50",
 			},
+			size: {
+				small: "rounded-md",
+				large: "rounded-2xl",
+			},
 		},
 		defaultVariants: {
 			intent: "primary",
+			size: "small",
 		},
 	}
 );
