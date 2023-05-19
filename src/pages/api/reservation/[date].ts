@@ -23,6 +23,9 @@ export default async function handler(
 				gte: setHours(new Date(date), 0).toISOString(),
 			},
 		},
+		include: {
+			user: true,
+		},
 	});
 
 	res.status(200).json(reservations);
