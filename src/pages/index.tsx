@@ -18,7 +18,8 @@ import {
 	RESERVATION_FROM__HOURS,
 	RESERVATION_TO__HOURS,
 } from "@constant/reservation";
-import { createReservation } from "@api/reservation";
+import { createReservation, getReservation } from "@api/reservation";
+import { useQuery } from "react-query";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,6 +38,11 @@ const Home: NextPageWithLayout = () => {
 		},
 	});
 
+	const { data: reservations } = useQuery(
+		[getReservation.uniqueKey, form.watch("dateFrom")],
+		() => getReservation(form.watch("dateFrom"))
+	);
+
 	return (
 		<main
 			className={`flex min-h-screen flex-col items-center justify-between  ${inter.className}`}>
@@ -47,9 +53,10 @@ const Home: NextPageWithLayout = () => {
 						className="w-full"
 						fieldsetClassName="flex w-full space-x-4 items-stretch"
 						form={form}
-						onSubmit={({ dateFrom, dateTo, timeFrom, timeTo }) => {
+						onSubmit={async ({ dateFrom, dateTo, timeFrom, timeTo }) => {
 							if (!dateFrom || !dateTo || !timeFrom || !timeTo) return;
-							createReservation({ dateFrom, dateTo, timeFrom, timeTo });
+							await createReservation({ dateFrom, dateTo, timeFrom, timeTo });
+							form.reset();
 						}}>
 						<p className="self-center">from:</p>
 						<DatePicker
@@ -97,10 +104,19 @@ const Home: NextPageWithLayout = () => {
 					</Form>
 				</Card>
 			</div>
-			<div className="flex p-5 items-start w-full">
+			<div className="flex p-5 items-start w-full space-x-8">
 				<Card intent="elevated">
 					<Calendar onClickDay={(date) => form.setValue("dateFrom", date)} />
 				</Card>
+				<div className="flex-col space-y-3">
+					{reservations?.map((reservation) => (
+						<div
+							className="rounded-xl bg-slate-500 px-3 py-1 text-slate-100 text font-bold"
+							key={
+								reservation.user.id
+							}>{`${reservation.user.name} - ${reservation.timeFrom} → ${reservation.timeTo}`}</div>
+					))}
+				</div>
 			</div>
 		</main>
 	);
