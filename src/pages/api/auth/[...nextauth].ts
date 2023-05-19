@@ -20,6 +20,14 @@ export const authOptions: AuthOptions = {
 		}),
 	],
 	secret: process.env.NEXTAUTH_SECRET,
+	callbacks: {
+		session({ session, user }) {
+			if (session.user) {
+				session.user.id = user.id;
+			}
+			return session;
+		},
+	},
 };
 
 export default NextAuth(authOptions);
